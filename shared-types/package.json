@@ -7,7 +7,7 @@
   "scripts": {
     "generate": "./scripts/generate-types.sh",
     "generate:auth": "openapi-typescript http://localhost:3001/api-docs.json -o src/generated/auth.ts",
-    "generate:league": "openapi-typescript http://localhost:3002/api-docs.json -o src/generated/league.ts",
+    "generate:league": "openapi-typescript http://localhost:3002/api-spec -o src/generated/league.ts",
     "generate:gateway": "openapi-typescript http://localhost:3000/api-docs.json -o src/generated/gateway.ts",
     "generate:all": "npm run generate:auth && npm run generate:league && npm run generate:gateway",
     "build": "tsc",

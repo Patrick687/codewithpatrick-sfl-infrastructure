@@ -3,7 +3,7 @@ export * from './common';
 export * from './auth';
 export * from './league';
 
-// Re-export generated types when available
+// Generated API types from OpenAPI specs
 export * as AuthAPI from './generated/auth';
 export * as LeagueAPI from './generated/league';
 export * as GatewayAPI from './generated/gateway';

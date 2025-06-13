@@ -10,7 +10,7 @@ import {
   CreateLeagueRequest,
   HealthCheckResponse,
   GatewayAPI
-} from '@sfl/shared-types';
+} from '../src/index';
 
 // Example 1: Using common response types
 export const createSuccessResponse = <T>(data: T, message?: string): SuccessResponse<T> => {

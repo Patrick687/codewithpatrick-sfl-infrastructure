@@ -60,7 +60,7 @@ fi
 
 if [ "$league_running" = true ]; then
     echo "📝 Generating League types..."
-    npx openapi-typescript http://localhost:3002/api-docs.json -o src/generated/league.ts
+    npx openapi-typescript http://localhost:3002/api-spec -o src/generated/league.ts
     echo "✅ League types generated"
 else
     echo "⚠️  Skipping League - service not running"
