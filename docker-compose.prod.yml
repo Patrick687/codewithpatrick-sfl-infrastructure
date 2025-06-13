@@ -1,0 +1,46 @@
+services:
+  sfl_gateway:
+    build: ./sfl_gateway
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./sfl_gateway/.env.prod
+    depends_on:
+      - auth
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  auth:
+    build: ./auth
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./auth/.env.prod
+    depends_on:
+      - auth_db
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  auth_db:
+    image: postgres:15
+    container_name: auth_db_prod
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: CHANGE-THIS-STRONG-PASSWORD-IN-PRODUCTION
+      POSTGRES_DB: codewithpatrick_auth_prod
+    restart: unless-stopped
+    volumes:
+      - auth_db_data_prod:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  auth_db_data_prod:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: sfl-postgres-dev
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - '5432:5432'
+    networks:
+      - sfl-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Auth Service (Development with volume mounts)
+  auth-service:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+      target: development # Multi-stage build target
+    container_name: sfl-auth-dev
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
+      - DB_NAME=auth_db
+      - JWT_SECRET=dev-jwt-secret-key-not-for-production
+      - GOOGLE_CLIENT_ID=your-google-client-id
+      - GOOGLE_CLIENT_SECRET=your-google-client-secret
+    volumes:
+      # Mount source code for hot reloading
+      - ./auth/src:/app/src:cached
+      - ./auth/package.json:/app/package.json:cached
+      - ./auth/tsconfig.json:/app/tsconfig.json:cached
+      # Use anonymous volumes for node_modules to avoid conflicts
+      - /app/node_modules
+    ports:
+      - '3001:3001'
+      - '9229:9229' # Debug port
+    networks:
+      - sfl-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: npm run dev
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'wget',
+          '--no-verbose',
+          '--tries=1',
+          '--spider',
+          'http://localhost:3001/health',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Gateway Service (Development with volume mounts)
+  gateway:
+    build:
+      context: ./sfl_gateway
+      dockerfile: Dockerfile
+      target: development # Multi-stage build target
+    container_name: sfl-gateway-dev
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - JWT_SECRET=dev-jwt-secret-key-not-for-production
+      - CORS_ORIGIN=http://localhost:3000,http://localhost:5173
+    volumes:
+      # Mount source code for hot reloading
+      - ./sfl_gateway/src:/app/src:cached
+      - ./sfl_gateway/package.json:/app/package.json:cached
+      - ./sfl_gateway/tsconfig.json:/app/tsconfig.json:cached
+      # Use anonymous volumes for node_modules to avoid conflicts
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+      - '9230:9230' # Debug port
+    networks:
+      - sfl-network
+    depends_on:
+      auth-service:
+        condition: service_healthy
+    command: npm run dev
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'wget',
+          '--no-verbose',
+          '--tries=1',
+          '--spider',
+          'http://localhost:3000/health',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  sfl-network:
+    driver: bridge

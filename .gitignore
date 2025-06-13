@@ -1,0 +1,103 @@
+# Infrastructure Repository .gitignore
+
+# Environment files (keep examples)
+.env*
+!.env.example
+!.env.template
+
+# Service directories (these should be separate repos or submodules)
+auth/
+sfl_gateway/
+
+# Docker volumes and data
+data/
+logs/
+postgres_data/
+postgres_dev_data/
+
+# Docker override files
+docker-compose.override.yml
+
+# Dependencies (from service directories)
+node_modules/
+*/node_modules/
+
+# Build outputs (from service directories)
+dist/
+*/dist/
+build/
+*/build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/settings.json
+.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# SSL certificates (if any)
+*.pem
+*.key
+*.crt
+*.csr
+
+# Backup files
+*.bak
+*.backup
+
+# Local configuration overrides
+local-config/
+local-scripts/
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker
+.dockerignore
