@@ -24,7 +24,7 @@ services:
   # Auth Service
   auth-service:
     build:
-      context: ./auth
+      context: ./sfl_authService
       dockerfile: Dockerfile
       target: production
     container_name: sfl-auth-prod

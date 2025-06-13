@@ -7,7 +7,7 @@
 .env.*.local
 
 # Service directories (these should be separate repos or submodules)
-auth/
+sfl_authService/
 sfl_gateway/
 sfl_leagueService/
 

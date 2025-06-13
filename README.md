@@ -73,7 +73,7 @@ sfl-infrastructure/
 
 ### Current Setup (Development Monorepo)
 
-This repository currently contains the service code in `auth/` and
+This repository currently contains the service code in `sfl_authService/` and
 `sfl_gateway/` directories for development convenience.
 
 ### Future Setup (Separate Repositories)

@@ -23,7 +23,7 @@ services:
   # Auth Service (Development with volume mounts)
   auth-service:
     build:
-      context: ./auth
+      context: ./sfl_authService
       dockerfile: Dockerfile
       target: development
     container_name: sfl-auth-dev
@@ -42,9 +42,9 @@ services:
       - SERVER_PORT=${AUTH_SERVER_PORT}
       - SERVER_HOST=${AUTH_SERVER_HOST}
     volumes:
-      - ./auth/src:/app/src:cached
-      - ./auth/package.json:/app/package.json:cached
-      - ./auth/tsconfig.json:/app/tsconfig.json:cached
+      - ./sfl_authService/src:/app/src:cached
+      - ./sfl_authService/package.json:/app/package.json:cached
+      - ./sfl_authService/tsconfig.json:/app/tsconfig.json:cached
       - /app/node_modules
     ports:
       - '3001:3001'

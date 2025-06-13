@@ -15,7 +15,7 @@ sfl-infrastructure/          # Main deployment repo
 ├── nginx/                  # Reverse proxy config
 └── docs/                   # Documentation
 
-sfl-auth/                   # Separate auth service repo
+sfl-authService/            # Separate auth service repo
 sfl-gateway/                # Separate gateway service repo
 ```
 
@@ -34,7 +34,7 @@ Keep current structure for development, but deploy from separate repos:
 
 ```
 sfl/                        # Development monorepo
-├── auth/                   # Symlink or clone
+├── sfl_authService/       # Symlink or clone
 ├── sfl_gateway/           # Symlink or clone
 ├── docker-compose.dev.yml  # Development
 └── scripts/               # Development scripts
