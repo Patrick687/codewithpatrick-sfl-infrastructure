@@ -1,13 +1,15 @@
 # Infrastructure Repository .gitignore
 
-# Environment files (keep examples)
+# Environment files (keep templates, ignore local/secret files)
 .env*
 !.env.example
-!.env.template
+!.env.*.template
+.env.*.local
 
 # Service directories (these should be separate repos or submodules)
 auth/
 sfl_gateway/
+sfl_leagueService/
 
 # Docker volumes and data
 data/

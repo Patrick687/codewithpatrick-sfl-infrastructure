@@ -1,13 +1,14 @@
 # SFL Infrastructure
 
-This repository contains Docker Compose files and deployment configurations for the SFL (Social Football League) application.
+This repository contains Docker Compose files and deployment configurations for
+the SFL (Social Football League) application.
 
 ## Architecture
 
 The SFL application consists of multiple microservices:
 
 - **Auth Service**: User authentication and authorization
-- **Gateway Service**: API Gateway that routes requests to microservices  
+- **Gateway Service**: API Gateway that routes requests to microservices
 - **PostgreSQL**: Primary database for user data
 
 ## Repository Structure
@@ -35,6 +36,7 @@ sfl-infrastructure/
 ### For Development (Current Setup)
 
 1. **Setup environment:**
+
    ```bash
    cp .env.example .env
    # Edit .env with your values
@@ -48,6 +50,7 @@ sfl-infrastructure/
 ### For Production
 
 1. **Configure environment:**
+
    ```bash
    cp .env.example .env
    # Edit .env with production values
@@ -63,18 +66,22 @@ sfl-infrastructure/
 - **Gateway**: http://localhost:3000
   - API Documentation: http://localhost:3000/api-docs
 - **Auth Service**: http://localhost:3001
-  - API Documentation: http://localhost:3001/api-docs  
+  - API Documentation: http://localhost:3001/api-docs
 - **PostgreSQL**: localhost:5432
 
 ## Development Workflow
 
 ### Current Setup (Development Monorepo)
-This repository currently contains the service code in `auth/` and `sfl_gateway/` directories for development convenience.
+
+This repository currently contains the service code in `auth/` and
+`sfl_gateway/` directories for development convenience.
 
 ### Future Setup (Separate Repositories)
+
 When ready to split into separate repositories:
 
 1. Create separate repositories:
+
    - `sfl-auth` for auth service
    - `sfl-gateway` for gateway service
 

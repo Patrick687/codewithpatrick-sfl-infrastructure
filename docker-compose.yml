@@ -1,56 +1,27 @@
-version: '3.8'
-
 services:
-  auth_db:
+  postgres:
     image: postgres:15
-    container_name: auth_db
+    container_name: sfl-postgres
     environment:
-      POSTGRES_DB: auth_db
-      POSTGRES_USER: auth_user
-      POSTGRES_PASSWORD: auth_password
-      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
-      - auth_db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
-      - app-network
-    restart: unless-stopped
-
-  auth:
-    build: ./auth
-    container_name: sfl-auth
-    ports:
-      - '3001:3001'
-    environment:
-      - NODE_ENV=docker
-    env_file:
-      - ./auth/.env.docker
-    depends_on:
-      - auth_db
-    networks:
-      - app-network
-    restart: unless-stopped
-
-  sfl_gateway:
-    build: ./sfl_gateway
-    container_name: sfl-sfl_gateway
-    ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=docker
-    env_file:
-      - ./sfl_gateway/.env.docker
-    depends_on:
-      - auth
-    networks:
-      - app-network
-    restart: unless-stopped
+      - sfl-network
 
 volumes:
-  auth_db_data:
+  postgres_data:
 
 networks:
-  app-network:
+  sfl-network:
     driver: bridge
