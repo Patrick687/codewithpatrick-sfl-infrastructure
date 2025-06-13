@@ -1,0 +1,36 @@
+{
+  "name": "@sfl/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types for SFL microservices",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "generate": "./scripts/generate-types.sh",
+    "generate:auth": "openapi-typescript http://localhost:3001/api-docs.json -o src/generated/auth.ts",
+    "generate:league": "openapi-typescript http://localhost:3002/api-docs.json -o src/generated/league.ts",
+    "generate:gateway": "openapi-typescript http://localhost:3000/api-docs.json -o src/generated/gateway.ts",
+    "generate:all": "npm run generate:auth && npm run generate:league && npm run generate:gateway",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "openapi-typescript": "^7.4.2",
+    "typescript": "^5.7.2"
+  },
+  "keywords": [
+    "typescript",
+    "types",
+    "openapi",
+    "swagger",
+    "microservices"
+  ],
+  "author": "",
+  "license": "ISC"
+}
