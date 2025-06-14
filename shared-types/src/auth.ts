@@ -3,7 +3,7 @@ import { TimestampFields, OptionalTimestampFields } from './common';
 
 // User types
 export interface User extends TimestampFields {
-  id: number;
+  id: string; // Changed from number to string for UUID compatibility
   email: string;
   isEmailVerified: boolean;
   firstName?: string;
@@ -32,7 +32,7 @@ export interface ChangePasswordRequest {
 
 // Token types
 export interface TokenPayload {
-  userId: number;
+  userId: string; // Changed from number to string for UUID compatibility
   email: string;
   iat?: number;
   exp?: number;
@@ -61,10 +61,10 @@ export interface GoogleProfile {
 }
 
 export interface AuthProvider extends TimestampFields {
-  id: number;
-  userId: number;
-  provider: 'google' | 'facebook' | 'github';
-  providerId: string;
+  id: string; // Changed from number to string for UUID compatibility
+  userId: string; // Changed from number to string for UUID compatibility
+  provider: 'google' | 'facebook' | 'github' | 'local';
+  providerId?: string;
   providerData?: Record<string, any>;
 }
 
